@@ -50,5 +50,5 @@ fclose(fid);
 %pre-allocate
 e2e = zeros([32, size(end_coords,3)]);
 for n = 1:size(end_coords,3)
-    e2e(:, n) = sqrt(sum((end_coords(1:2:end,:,1) - end_coords(2:2:end,:,1)).^2,2));
+    e2e(:, n) = sqrt(sum((end_coords(1:2:end,:,n) - end_coords(2:2:end,:,n)).^2,2));
 end

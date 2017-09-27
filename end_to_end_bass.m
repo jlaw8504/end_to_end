@@ -1,4 +1,4 @@
-function [e2e, end_coords] = end_to_end(file)
+function end_to_end_bass(file)
 %%END_TO_END Calculates the end to end distance of the sister centromeres
 %%in the model.
 
@@ -50,9 +50,9 @@ fclose(fid);
 %pre-allocate
 e2e = zeros([32, size(end_coords,3)]);
 for n = 1:size(end_coords,3)
-    e2e(:, n) = sqrt(sum((end_coords(1:2:end,:,1) - end_coords(2:2:end,:,1)).^2,2));
+    e2e(:, n) = sqrt(sum((end_coords(1:2:end,:,n) - end_coords(2:2:end,:,n)).^2,2));
 end
-%% Write data to csv files
+%% save data
 name_cell = strsplit(file, '.');
-csvwrite(sprintf('%s_e2e.csv', name_cell{1}), e2e));
+save(sprintf('%s_e2e.mat', name_cell{1}),'e2e', 'end_coords');
 
