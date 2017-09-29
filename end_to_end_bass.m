@@ -9,7 +9,7 @@ mass_cell = strsplit(all_masses, '\n');
 split_mass_cell = cellfun(@(c) strsplit(c),mass_cell,'UniformOutput', false);
 size_idx = cellfun(@(c) size(c,2) == 7, split_mass_cell);
 split_mass_cell = split_mass_cell(size_idx);
-end_log_rev = cellfun(@(c) contains('3.38889e-015',c{3}), split_mass_cell);
+end_log_rev = cellfun(@(c) contains('3.38889e-15',c{3}), split_mass_cell);
 end_log = fliplr(end_log_rev);
 end_idx = find(end_log);
 
@@ -45,7 +45,8 @@ while ~feof(fid)
     end
 end
 fclose(fid);
-
+name_cell = strsplit(file, '.');
+save(sprintf('%s_e2e.mat', name_cell{1}),'end_coords');
 %% Calcuate end to end distance over time of each chromatid
 %pre-allocate
 e2e = zeros([32, size(end_coords,3)]);
@@ -53,6 +54,5 @@ for n = 1:size(end_coords,3)
     e2e(:, n) = sqrt(sum((end_coords(1:2:end,:,n) - end_coords(2:2:end,:,n)).^2,2));
 end
 %% save data
-name_cell = strsplit(file, '.');
 save(sprintf('%s_e2e.mat', name_cell{1}),'e2e', 'end_coords');
 
